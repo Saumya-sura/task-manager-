@@ -1,11 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:task_manager/model/user_model.dart';
+import 'package:task_manager/repository/auth_local_repo.dart';
 import 'package:task_manager/repository/auth_remote_repo.dart';
 import 'package:task_manager/services/services.dart';
 
 part 'auth_state.dart';
 class AuthCubit  extends Cubit<AuthState> {
 AuthCubit() : super(AuthInitial());
+final authLocalRepository = AuthLocalRepository(); 
 final authRemoteRepository = AuthRemoteRepository();
 final spService = SpService();
 void getUserData() async{
@@ -53,8 +55,7 @@ void getUserData() async{
       if (userModel.token.isNotEmpty) {
         await spService.setToken(userModel.token);
       }
-
-      
+      authLocalRepository.insertUser(userModel);
 
       emit(AuthLoggedIn(userModel));
     } catch (e) {
