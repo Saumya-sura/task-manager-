@@ -7,7 +7,8 @@
     "start": "ts-node src/index.ts",
     "dev": "nodemon -L ts-node src/index.ts",
     "build": "tsc",
-    "dev:watch": "nodemon --watch src --ext ts,json --exec ts-node src/index.ts"
+    "dev:watch": "nodemon --watch src --ext ts,json --exec ts-node src/index.ts",
+    "migrate": "ts-node src/db/migrate.ts"
   },
   "keywords": [],
   "author": "",

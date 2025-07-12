@@ -11,7 +11,8 @@ services:
       - PORT=8000
       - DATABASE_URL=postgres://postgres:test123@db:5432/mydb
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./:/app
       - /app/node_modules
@@ -27,6 +28,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

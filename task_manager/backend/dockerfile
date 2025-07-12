@@ -10,5 +10,8 @@ RUN npm install --save-dev @types/bcryptjs
 # Copy the rest of the application
 COPY . .
 
+# Make the start script executable
+RUN chmod +x start.sh
+
 EXPOSE 8000
-CMD ["npm", "run", "dev"]
+CMD ["./start.sh"]
