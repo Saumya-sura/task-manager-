@@ -6,7 +6,7 @@ import { eq } from 'drizzle-orm';
 const taskRouter = Router();
 taskRouter.post("/",auth,async (req: AuthRequest, res) => {
     try{
-        req.body ={...req.body,uid:req.user};
+        req.body ={...req.body,dueAt: new Date(req.body.dueAt),uid:req.user};
         const newTask:NewTask = req.body;
         const[task]=await db.insert(tasks).values(newTask).returning(); 
         res.status(201).json(task);  
